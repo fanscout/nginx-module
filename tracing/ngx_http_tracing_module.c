@@ -32,7 +32,7 @@ static ngx_int_t ngx_http_tracing_init(ngx_conf_t *cf);
 static ngx_int_t ngx_http_tracecode_header_filter(ngx_http_request_t *r);
 static ngx_int_t ngx_http_gen_tracecode(ngx_http_request_t *r, ngx_chain_t *in, ngx_chain_t *chain_link);
 static ngx_int_t ngx_http_tracecode_body_filter(ngx_http_request_t *r, ngx_chain_t *in);
-static ngx_int_t ngx_http_baidu_error_handler(ngx_http_request_t *r);
+static ngx_int_t ngx_http_tracing_error_handler(ngx_http_request_t *r);
 static u_char *ngx_http_tracing_log_error_handler(ngx_http_request_t *r, ngx_http_request_t *sr, u_char *buf, size_t len);
 
 static ngx_int_t g_logid_index = -1;
@@ -534,7 +534,7 @@ ngx_http_tracing_init(ngx_conf_t *cf)
     if(h == NULL){
         return NGX_ERROR;
     }
-    *h = ngx_http_baidu_error_handler;
+    *h = ngx_http_tracing_error_handler;
     srand((time(NULL) + g_local_ip));
 
     return NGX_OK;
@@ -718,7 +718,7 @@ ngx_next_body:
 }
 
 static ngx_int_t
-ngx_http_baidu_error_handler(ngx_http_request_t *r)
+ngx_http_tracing_error_handler(ngx_http_request_t *r)
 {
     r->log_handler = ngx_http_tracing_log_error_handler;
 
