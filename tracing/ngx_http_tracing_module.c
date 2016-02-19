@@ -418,7 +418,7 @@ ngx_http_get_variable_tracecode(ngx_http_request_t *r,
     u_char *logid = NULL;
     u_char *tracecode = NULL;
     ngx_uint_t tracecode_real_len = 0;
-    ngx_int_t time_sec = 0, time_msec = 0;
+    ngx_int_t time_sec = 0;
     struct timeval tv = {0, 0};
     struct tm tblock = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     ngx_http_tracing_loc_conf_t *conf = NULL;
@@ -448,7 +448,6 @@ ngx_http_get_variable_tracecode(ngx_http_request_t *r,
 
     ngx_gettimeofday(&tv);
     time_sec = tv.tv_sec;
-    time_msec = tv.tv_usec / 1000;
     localtime_r((time_t *)&time_sec, &tblock);
 
     ngx_snprintf((u_char *)tracecode, PT_TRACECODE_LENGTH, "%s%010l%02d%02d%02d", 
